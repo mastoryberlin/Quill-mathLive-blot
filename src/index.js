@@ -30,20 +30,20 @@ let options = {
 export default {
 	options: options,
 	register: function(Quill) {
-		let BlockEmbed = Quill.import("blots/block/embed");
+		let Embed = Quill.import("blots/embed");
 
-		class MathLiveBlot extends BlockEmbed {
+		class MathLiveBlot extends Embed {
 			static create(content) {
 				let node = super.create();
 
 				node.setAttribute("contenteditable", false);
 
-				let div = document.createElement("div");
+				let span = document.createElement("span");
 
-				node.appendChild(div);
+				node.appendChild(span);
 				console.log(node);
 
-				node.MathLiveField = MathLive.makeMathField(div, options);
+				node.MathLiveField = MathLive.makeMathField(span, options);
 
 				node.MathLiveField.$latex(content);
 
@@ -60,7 +60,7 @@ export default {
 		}
 
 		MathLiveBlot.blotName = "mathLive";
-		MathLiveBlot.tagName = "div";
+		MathLiveBlot.tagName = "span";
 		MathLiveBlot.className = "mathLiveBlot";
 
 		Quill.register(MathLiveBlot);
